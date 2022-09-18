@@ -70,25 +70,48 @@ instagram = []
 title_names = []
 file1_data = []
 file2_data = []
+file_error = False
 
 
 os.chdir('folders')
 dirs = os.listdir()
 
+
 for c in dirs:
-    os.chdir(c)
-    get_data()
-    os.chdir('..')
+    try:
+        os.chdir(c)
+    except:
+        pass
+    else:
+        try:
+            get_data()
+        except:
+            cred = os.listdir()
+            if not 'credits.txt' in cred:
+                print(f'!!!Возникла ошибка!!!\n'
+                      f'В папке "{c}" не обнаружен файл "credits.txt".\n'
+                      f'Проверьте название файла и повторите попытку.')
+            else:
+                print(f"!!!Возникла ошибка в ходе считывания файла!!!")
+            file_error = True
+            os.chdir('..')
+            break
 
-with open('file1.txt', 'w', encoding='utf-8') as file:
-    file.writelines(file1_data)
+        os.chdir('..')
 
-with open('file2.txt', 'w', encoding='utf-8') as file:
-    file.writelines(file2_data)
 
-with open('file3.txt', 'w', encoding='utf-8') as file:
-    file.writelines(title_names)
-    file.write('\n\n')
-    file.writelines(emails)
-    file.write('\n\n')
-    file.writelines(instagram)
+if not file_error:
+    with open('file1.txt', 'w', encoding='utf-8') as file:
+        file.writelines(file1_data)
+
+    with open('file2.txt', 'w', encoding='utf-8') as file:
+        file.writelines(file2_data)
+
+    with open('file3.txt', 'w', encoding='utf-8') as file:
+        file.writelines(title_names)
+        file.write('\n\n')
+        file.writelines(emails)
+        file.write('\n\n')
+        file.writelines(instagram)
+
+    print("Программа успешно отработала")
