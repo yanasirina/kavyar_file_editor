@@ -9,13 +9,19 @@ You can get more information about Kavyar here: **<a href="https://kavyar.com/ho
 ## Why can this project be helpful
 Kavyar has the same submission form for all partner magazines. Photographers send pictures and informations about them 
 using this form.
-Then Kavyar generates folders with photos and txt files. These txt files need to be manually parsed and modified.
-For example, magazines usually need to separately collect submitters' instagrams and emails, information for the cover 
+Then Kavyar generates folders with photos and txt files. These txt files need to be parsed and modified.
+For example, magazines need to separately collect submitters' instagrams and emails, information for the cover 
 and for pages.
 These things are usually made manually. However, this project allows magazines to automate such routine work.
 
 ## How to use
-Python file should be placed in a directory with folders created by Kavyar. The next step is running program.
+Firstly, install Google Translate API.
+```
+pip install googletrans==3.1.0a0
+```
+Then place folders with txt file (that were made by kavyar) in 'folders' directory. 
+You should remove example folders before placing yours.<br>
+After that you can run main.py
 ```
 python main.py
 ```
@@ -26,8 +32,8 @@ After running the app it will create 3 txt files:
 This program also translates russian text in english, if submitter forgot to translate it theirselves.
 
 ## Example of work
-There is a directory 'example' in this project that includes folders that were made by Kavyar, main.py and files created 
-using it.
+There is a directory 'folders' in this project that includes folders that were made by Kavyar, and files created 
+using this app.
 In this directory you can see how the program works.
 
 ## The idea of the project
