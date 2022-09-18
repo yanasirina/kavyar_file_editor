@@ -1,0 +1,94 @@
+import os
+
+
+def get_data():
+    global titles, file1_data, emails, file2_data, instagram
+    title_counter = 0
+    submitter_counter = 0
+    email_counter = 0
+    credit = {}
+    names = []
+
+    with open('credits.txt', 'r', encoding='utf-8') as file:
+        info = file.readlines()
+
+        for i in range(len(info)):
+            if 'Title: ' in info[i] and title_counter == 0:
+                title = info[i].replace('Title: ', '').strip()
+                title_counter = 1
+            if 'Submitter: ' in info[i] and submitter_counter == 0:
+                submitter = info[i].replace('Submitter: ', '').strip()
+                submitter_counter = 1
+            if 'Email: ' in info[i] and email_counter == 0:
+                email = info[i].replace('Email: ', '').strip()
+                email_counter = 1
+            if 'Submission URL: ' in info[i]:
+                start = i + 1
+                break
+
+        line = info[start]
+        while line == '\n':
+            start += 1
+            line = info[start]
+
+        credit_key = ''
+        credit_value = ''
+        while line != '\n':
+            line = info[start]
+            if line[0] != ' ':
+                credit_key = line.strip()
+                ind = credit_key.find(': ')
+                name = credit_key[ind + 1:].strip()
+                if name not in names:
+                    names.append(name)
+            if 'IG: ' in line:
+                credit_value = '@' + line.replace('IG: ', '').strip()
+                if credit_value not in instagram:
+                    instagram.append(credit_value + '\n')
+            if info[start + 1][0] != ' ' or info[start + 1] == '\n':
+                credit[credit_key] = credit_value
+                credit_key = ''
+                credit_value = ''
+
+            start += 1
+
+        sorted_credit = sorted(credit, key=lambda value: submitter not in value)
+        for person in sorted_credit:
+            res = person + ' ' + credit[person] + '\n'
+            file2_data.append(res)
+        file2_data.append('\n\n')
+        title_names.append(title + ': ' + ', '.join(names[:-1]) + '\n')
+        titles.append(title)
+        emails.append(email + '\n')
+        title_submitter = submitter + ':\n' + title + '\n\n\n'
+        file1_data.append(title_submitter)
+
+
+titles = []
+emails = []
+instagram = []
+title_names = []
+file1_data = []
+file2_data = []
+
+
+os.chdir('folders')
+dirs = os.listdir()
+
+for c in dirs:
+    os.chdir(c)
+    get_data()
+    os.chdir('..')
+
+with open('file1.txt', 'w', encoding='utf-8') as file:
+    file.writelines(file1_data)
+
+with open('file2.txt', 'w', encoding='utf-8') as file:
+    file.writelines(file2_data)
+
+with open('file3.txt', 'w', encoding='utf-8') as file:
+    file.writelines(title_names)
+    file.write('\n\n')
+    file.writelines(emails)
+    file.write('\n\n')
+    file.writelines(instagram)
