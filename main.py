@@ -1,4 +1,9 @@
 import os
+from googletrans import Translator
+
+
+def match(text, alphabet=set('абвгдеёжзийклмнопрстуфхцчшщъыьэюя')):
+    return not alphabet.isdisjoint(text.lower())
 
 
 def get_data(folder_name):
@@ -8,6 +13,8 @@ def get_data(folder_name):
     email_counter = 0
     credit = {}
     names = []
+
+    translator = Translator()
 
     folder_name = folder_name.lower()
     if 'повтор' in folder_name or 'вне' in folder_name:
@@ -21,9 +28,13 @@ def get_data(folder_name):
         for i in range(len(info)):
             if 'Title: ' in info[i] and title_counter == 0:
                 title = info[i].replace('Title: ', '').strip()
+                if match(title):
+                    title = translator.translate(title).text
                 title_counter = 1
             if 'Submitter: ' in info[i] and submitter_counter == 0:
                 submitter = info[i].replace('Submitter: ', '').strip()
+                if match(submitter):
+                    submitter = translator.translate(submitter).text
                 submitter_counter = 1
             if 'Email: ' in info[i] and email_counter == 0:
                 email = info[i].replace('Email: ', '').strip()
@@ -43,6 +54,8 @@ def get_data(folder_name):
             line = info[start]
             if line[0] != ' ':
                 credit_key = line.strip()
+                if match(credit_key):
+                    credit_key = translator.translate(credit_key).text
                 ind = credit_key.find(': ')
                 name = credit_key[ind + 1:].strip()
                 if name not in names:
