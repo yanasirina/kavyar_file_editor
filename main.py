@@ -1,6 +1,5 @@
 import os
 from googletrans import Translator
-from string import printable
 
 
 def match(text, alphabet=set('абвгдеёжзийклмнопрстуфхцчшщъыьэюя')):
@@ -55,6 +54,8 @@ def get_data(folder_name):
             line = info[start]
             if line[0] != ' ':
                 credit_key = line.strip()
+                if match(credit_key):
+                    credit_key = translator.translate(credit_key).text
                 ind = credit_key.find(': ')
                 name = credit_key[ind + 1:].strip()
                 if name not in names:
