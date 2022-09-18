@@ -1,5 +1,6 @@
 import os
 from googletrans import Translator
+from translite.translite import transliterate
 
 
 def match(text, alphabet=set('абвгдеёжзийклмнопрстуфхцчшщъыьэюя')):
@@ -34,7 +35,7 @@ def get_data(folder_name):
             if 'Submitter: ' in info[i] and submitter_counter == 0:
                 submitter = info[i].replace('Submitter: ', '').strip()
                 if match(submitter):
-                    submitter = translator.translate(submitter).text
+                    submitter = transliterate(submitter)
                 submitter_counter = 1
             if 'Email: ' in info[i] and email_counter == 0:
                 email = info[i].replace('Email: ', '').strip()
@@ -55,7 +56,7 @@ def get_data(folder_name):
             if line[0] != ' ':
                 credit_key = line.strip()
                 if match(credit_key):
-                    credit_key = translator.translate(credit_key).text
+                    credit_key = transliterate(credit_key)
                 ind = credit_key.find(': ')
                 name = credit_key[ind + 1:].strip()
                 if name not in names:
