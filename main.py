@@ -2,7 +2,7 @@ import os
 
 
 def get_data(folder_name):
-    global titles, file1_data, emails, file2_data, instagram
+    global file1_data, emails, file2_data, instagram
     title_counter = 0
     submitter_counter = 0
     email_counter = 0
@@ -67,7 +67,6 @@ def get_data(folder_name):
 
         if append_file3:
             title_names.append(title + ': ' + ', '.join(names[:-1]) + '\n')
-        titles.append(title)
 
         if append_file3:
             emails.append(email + '\n')
@@ -75,7 +74,6 @@ def get_data(folder_name):
         file1_data.append(title_submitter)
 
 
-titles = []
 emails = []
 instagram = []
 title_names = []
