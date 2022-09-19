@@ -28,7 +28,7 @@ python main.py
 After running the app it will create 3 txt files:
 <li>file1.txt includes all information for the cover</li>
 <li>file2.txt includes all information for pages</li>
-<li>file3.txt includes title and participants of the shooting, their emails and instagrams</li><br>
+<li>file3.txt includes title and participants of the shooting, their emails and instagrams (except info from "повтор" and "вне системы" folders</li><br>
 This program also translates russian text in english, if submitter forgot to translate it theirselves.
 
 ## Example of work
