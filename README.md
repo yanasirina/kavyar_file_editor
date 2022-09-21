@@ -15,7 +15,20 @@ and for pages.
 These things are usually made manually. However, this project allows magazines to automate such routine work.
 
 ## How to use
-Firstly, install Google Translate API.
+Firstly, create virtual environment.
+```
+python3 -m venv venv
+```
+Then activate it.<br>
+For Windows:
+```
+venv\Scripts\activate.bat
+```
+For Linux or MacOS:
+```
+source venv/bin/activate
+```
+Install Google Translate API.
 ```
 pip install googletrans==3.1.0a0
 ```
